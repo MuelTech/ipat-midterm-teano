@@ -156,7 +156,8 @@ app.get("/verify-certificate-access/:username/:student_no", authenticateToken, a
         }
 
         const userRole = results[0].role;
-        const hasAccess = userRole === "admin" || userRole === student_no;
+        const hasAccess = userRole === student_no; // Admin access removed since admin page has no functionality
+        //const hasAccess = userRole === "admin" || userRole === student_no;  // Original code with admin access
 
         res.json({
             hasAccess,
