@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import FreeTuitionImage from "../src/assets/FREETUITION.png";
 import EaristLogo from "../src/assets/EaristLogo.png";
 import ApproveSignature from "../src/assets/ApproveSignature.png";
+import { Button } from "@mui/material";
 
 const CertificateOfRegistration = () => {
     const navigate = useNavigate();
@@ -161,7 +162,23 @@ const CertificateOfRegistration = () => {
     return (
 
         <div style={containerStyle}>
+            
             <div style={contentStyle}>
+            <div>
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                    // Clear localStorage and redirect to login
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("role");
+                    navigate("/login");
+                }}
+            >
+                Logout
+            </Button>
+            </div>
                 <form
                     style={{
                         border: "1px solid black",
@@ -3124,7 +3141,6 @@ const CertificateOfRegistration = () => {
                 </form>
             </div>
         </div>
-
     );
 };
 
