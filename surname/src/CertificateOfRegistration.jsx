@@ -30,11 +30,11 @@ const CertificateOfRegistration = () => {
         }
     }, [navigate]);
 
-    const verifyAccessAndFetchCertificate = async (username, registrationNo) => {
+    const verifyAccessAndFetchCertificate = async (username, studentNo) => {
         try {
             const token = localStorage.getItem("token");
             const verifyResponse = await axios.get(
-                `http://localhost:5000/verify-certificate-access/${username}/${registrationNo}`,
+                `http://localhost:5000/verify-certificate-access/${username}/${studentNo}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ const CertificateOfRegistration = () => {
             );
 
             if (verifyResponse.data.hasAccess) {
-                fetchCertificate(registrationNo);
+                fetchCertificate(studentNo);
             } else {
                 setError("You are not authorized to view this certificate");
                 setLoading(false);
@@ -55,10 +55,10 @@ const CertificateOfRegistration = () => {
         }
     };
 
-    const fetchCertificate = async (registrationNo) => {
+    const fetchCertificate = async (studentNo) => {
         try {
             const token = localStorage.getItem("token");
-            const response = await axios.get(`http://localhost:5000/certificate/${registrationNo}`, {
+            const response = await axios.get(`http://localhost:5000/certificate/${studentNo}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -67,7 +67,7 @@ const CertificateOfRegistration = () => {
             setLoading(false);
         } catch (err) {
             if (err.response?.status === 404) {
-                setError("Certificate not found. Please check your registration number.");
+                setError("Certificate not found. Please check your student number.");
             } else if (err.response?.status === 401 || err.response?.status === 403) {
                 setError("Unauthorized access. Please log in again.");
                 navigate("/login");
